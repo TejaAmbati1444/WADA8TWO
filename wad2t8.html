@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Number to Words</title>
+
+<script>
+function convert() {
+
+    var num = document.getElementById("num").value;
+
+    // Check if empty or not a number
+    if (num == "" || isNaN(num)) {
+        document.getElementById("result").innerHTML =
+        "Please enter numbers only (0-999)";
+        return;
+    }
+
+    // Check range
+    if (num < 0 || num > 999) {
+        document.getElementById("result").innerHTML =
+        "Enter number between 0 and 999 only";
+        return;
+    }
+
+    var ones = ["Zero","One","Two","Three","Four","Five",
+                "Six","Seven","Eight","Nine"];
+
+    var teens = ["Ten","Eleven","Twelve","Thirteen","Fourteen",
+                 "Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"];
+
+    var tens = ["","","Twenty","Thirty","Forty",
+                "Fifty","Sixty","Seventy","Eighty","Ninety"];
+
+    num = parseInt(num);
+    var words = "";
+
+    if (num < 10) {
+        words = ones[num];
+    }
+    else if (num < 20) {
+        words = teens[num - 10];
+    }
+    else if (num < 100) {
+        words = tens[Math.floor(num/10)] + " " + ones[num%10];
+    }
+    else {
+        words = ones[Math.floor(num/100)] + " Hundred ";
+        var remainder = num % 100;
+
+        if (remainder < 10)
+            words += ones[remainder];
+        else if (remainder < 20)
+            words += teens[remainder - 10];
+        else
+            words += tens[Math.floor(remainder/10)] + " " + ones[remainder%10];
+    }
+
+    document.getElementById("result").innerHTML = words;
+}
+</script>
+
+</head>
+
+<body>
+
+<h2>Number to Words (0-999)</h2>
+
+Enter Number:
+<input type="text" id="num" maxlength="3">
+<button onclick="convert()">Convert</button>
+
+<p id="result"></p>
+
+</body>
+</html>
